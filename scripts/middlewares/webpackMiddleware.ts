@@ -1,8 +1,9 @@
 // import { Compiler, MultiCompiler } from 'webpack';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-
+import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackDev from '../config/webpack.dev';
+import { HMR_PATH } from '../utils';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function webpackMiddleware(compiler: webpack.Compiler) {
@@ -17,9 +18,15 @@ export default function webpackMiddleware(compiler: webpack.Compiler) {
     // writeToDisk: true
   };
 
+  const hotMiddlewareOptions: webpackHotMiddleware.MiddlewareOptions = {
+    path: HMR_PATH,
+  }
+
 
   return [
     // @ts-ignore
     webpackDevMiddleware(compiler, devMiddlewareOptions),
+    // @ts-ignore
+    webpackHotMiddleware(compiler, hotMiddlewareOptions),
   ];
 }

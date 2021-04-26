@@ -19,6 +19,8 @@ const resolvePath = (...params: string[]) => _path.resolve(PROJECT_ROOT, ...para
 const PROJECT_NAME = require(resolvePath(PROJECT_ROOT, 'package.json'))?.name || '';
 const DEFAULT_HOST = '127.0.0.1';
 const DEFAULT_PORT = 9527;
+const HMR_PATH = '/__webpack_hmr';
+const COPYRIGHT = 'naremloa';
 
 export {
   getPort,
@@ -29,5 +31,7 @@ export {
   PROJECT_ROOT,
   DEFAULT_HOST,
   DEFAULT_PORT,
+  HMR_PATH,
   resolvePath,
+  COPYRIGHT,
 }

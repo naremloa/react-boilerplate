@@ -20,6 +20,7 @@ module.exports = (api) => {
           // 處理 React 解析，和自動引入 React
           ['@babel/preset-react', { development: true, runtime: 'automatic' }]
         ],
+        plugins: ['react-hot-loader/babel'],
       },
       production: {
         presets: [

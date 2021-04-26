@@ -1,5 +1,4 @@
 import { Configuration } from 'webpack';
-import Webpackbar from 'webpackbar';
 // @ts-ignore
 import FriendlyErrorsWebpackPlugin from '@soda/friendly-errors-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
@@ -36,7 +35,11 @@ function setCssLoaders(importLoaders: number = 0) {
 
 const webpackCommon: Configuration = {
   context: PROJECT_ROOT,
-  entry: resolvePath('./src/index.tsx'),
+  entry: [
+    // 對 react-hot-loader dev 和 prod 版本做切換
+    'react-hot-loader/patch',
+    resolvePath('./src/index.tsx'),
+  ],
   output: {
     publicPath: '/',
     path: resolvePath('./dist'),
@@ -47,8 +50,8 @@ const webpackCommon: Configuration = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
     alias: {
-      // // 替换 react-dom 成 @hot-loader/react-dom 以支持 react hooks 的 hot reload
-      // 'react-dom': '@hot-loader/react-dom',
+      // 替换 react-dom 成 @hot-loader/react-dom 以支持 react hooks 的 hot reload
+      'react-dom': '@hot-loader/react-dom',
       '@': resolvePath('./src'),
   },
   },
@@ -67,10 +70,6 @@ const webpackCommon: Configuration = {
     ],
   },
   plugins: [
-    new Webpackbar({
-      name: PROJECT_NAME,
-      color: '#75cabe',
-    }),
     new FriendlyErrorsWebpackPlugin(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
